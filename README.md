@@ -10,20 +10,20 @@ To start, do as follows:
 
 ## Snippets
 ### VirtualHost
-    &lt;VirtualHost *:80&gt;
+    <VirtualHost *:80>
         ServerName mychat.dev
         DocumentRoot /var/www/mychat/public
-        &ltDirectory /&gt;
+        <Directory />
             Options FollowSymLinks
             AllowOverride All
-        &lt;/Directory&gt;
-        &lt;Directory /var/www/mychat/public&gt;
+        </Directory>
+        <Directory /var/www/mychat/public>
             Options Indexes FollowSymLinks MultiViews
             AllowOverride All
             Order allow,deny
             allow from all
-        &lt;/Directory&gt;
-    &lt;/VirtualHost&gt;
+        </Directory>
+    </VirtualHost>
 
 ## Using
 * PHP
