@@ -10,7 +10,6 @@ To start, do as follows:
 
 ## Snippets
 ### VirtualHost
-<code>
     &lt;VirtualHost *:80&gt;
         ServerName mychat.dev
         DocumentRoot /var/www/mychat/public
@@ -25,7 +24,6 @@ To start, do as follows:
             allow from all
         &lt;/Directory&gt;
     &lt;/VirtualHost&gt;
-</code>
 
 ## Using
 * PHP
