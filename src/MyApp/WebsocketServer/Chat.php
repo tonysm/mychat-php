@@ -23,16 +23,16 @@ class Chat implements MessageComponentInterface
         switch ($msg->tipo) {
             case 'userconnecting':
                 $from->user = $msg->user;
+                $from->user->cod = md5(time() . $msg->user->username);
                 $this->clients->attach($from);
                 $this->sendUpdateUsersBut($from);
+                $this->updateFullUserList($from);
                 break;
             default:
                 $numRecv = count($this->clients) - 1;
                 foreach($this->clients as $client) {
-                    if ($client !== $from 
-                        && $client->user->department === $from->user->department) 
-                    {
-                        $this->sendMessage($client, $from->user->username . ": " . $msg->msg);
+                    if ($this->isDiferentSocketButSameDepartment($from, $client)) {
+                        $this->sendMessage($client,  $from->user->username . ': '. $msg->msg);
                     }
                 }
                 break;
@@ -51,7 +51,7 @@ class Chat implements MessageComponentInterface
 
     protected function sendMessage($socket, $msg) {
         $data = array(
-            'username' => 'lorem',
+            'username' => $socket->user->username,
             'msg' => $msg,
             'tipo' => 'mainmessage'
         );
@@ -63,25 +63,25 @@ class Chat implements MessageComponentInterface
         $data = array(
             'total' => count($this->clients) - 1,
             'username' => $socketNot->user->username,
+            'cod' => $socketNot->user->cod,
             'tipo' => 'userconnected'
         );
 
         foreach($this->clients as $client) {
-            if ($client !== $socketNot && $socketNot->user->department === $client->user->department) {
+            if ($this->isDiferentSocketButSameDepartment($socketNot, $client)) {
                 $client->send(json_encode($data));
             }
         }
-
-        $this->updateFullUserList($socketNot);
     }
 
     protected function updateFullUserList($socket) {
         $users = array();
 
         foreach($this->clients as $client) {
-            if ($client !== $socket && $socket->user->department === $client->user->department) {
+            if ($this->isDiferentSocketButSameDepartment($socket, $client)) {
                 $users[] = array(
-                    'username' => $client->user->username
+                    'username' => $client->user->username,
+                    'cod' => $client->user->cod
                 );
             }
         }
@@ -96,6 +96,29 @@ class Chat implements MessageComponentInterface
     }
 
     protected function sendUserDisconnected($socket) {
-        echo "user disconnected";
+        $msg = array(
+            'tipo' => 'userdisconneted',
+            'username' => $socket->user->username,
+            'cod' => $socket->user->cod
+        );
+
+        foreach($this->clients as $client) {
+            if ($this->isDifferentDepartment($socket, $client)) {
+                $client->send(json_encode($msg));
+                $this->updateFullUserList($client);
+            }
+        }
+    }
+
+    protected function isDifferentSocket($first, $second) {
+        return $first->user->cod !== $second->user->cod;
+    }
+
+    protected function isDifferentDepartment($first, $second) {
+        return $first->user->department === $second->user->department;
+    }
+
+    protected function isDiferentSocketButSameDepartment($first, $second) {
+        return $this->isDifferentSocket($first, $second) && $this->isDifferentDepartment($first, $second);
     }
 }
