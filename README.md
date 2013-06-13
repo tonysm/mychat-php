@@ -1,4 +1,4 @@
-# Example of a chat app using just PHP and WebSocket
+# Chat app using just PHP and WebSocket
 
 ## Instalation
 To start, do as follows:
