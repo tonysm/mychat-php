@@ -51,6 +51,7 @@
 
 		function appendMessage($msg) {
 			$chatwindow.append($msg);
+			$chatwindow.scrollTop($chatwindow[0].scrollHeight);
 		}
 
 		function translateMessage(jsontxt) {
@@ -66,8 +67,18 @@
 				case 'inituserslist':
 					initUsersList(json);
 					break;
+				case 'userdisconneted':
+					showUserDisconnected(json.username);
+					break;
 
 			}
+		}
+
+		function showUserDisconnected(username) {
+			var msg = buildMessage("user \"" + username + "\" disconnected");
+
+			msg.addClass('others alert alert-error');
+			appendMessage(msg);
 		}
 
 		function addNewUser (data) {
@@ -86,10 +97,13 @@
 			$chatcount.empty().html(data.total);
 
 			var list = "";
-			data.users.forEach(function(val) {
-				list += '<li>' + val.username + '</li>';
-			});
-			$userlist.append(list);
+			if (data.users.length) {
+				data.users.forEach(function(val) {
+					list += '<li>' + val.username + '</li>';
+				});
+			};
+			
+			$userlist.empty().append(list);
 		}
 	}
 })(jQuery);
