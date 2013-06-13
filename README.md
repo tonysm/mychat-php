@@ -11,20 +11,20 @@ To start, do as follows:
 ## Snippets
 ### VirtualHost
 <code>
-&lt;VirtualHost *:80&gt;
-<br/>    ServerName mychat.dev
-<br/>    DocumentRoot /var/www/mychat/public
-<br/>    &ltDirectory /&gt;
-<br/>        Options FollowSymLinks
-<br/>        AllowOverride All
-<br/>    &lt;/Directory&gt;
-<br/>    &lt;Directory /var/www/mychat/public&gt;
-<br/>        Options Indexes FollowSymLinks MultiViews
-<br/>        AllowOverride All
-<br/>        Order allow,deny
-<br/>        allow from all
-<br/>    &lt;/Directory&gt;
-&lt;/VirtualHost&gt;
+    &lt;VirtualHost *:80&gt;
+        ServerName mychat.dev
+        DocumentRoot /var/www/mychat/public
+        &ltDirectory /&gt;
+            Options FollowSymLinks
+            AllowOverride All
+        &lt;/Directory&gt;
+        &lt;Directory /var/www/mychat/public&gt;
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            Order allow,deny
+            allow from all
+        &lt;/Directory&gt;
+    &lt;/VirtualHost&gt;
 </code>
 
 ## Using
