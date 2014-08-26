@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 // user can pass the port when starting the server
 $port = $argc == 2 ? $argv[1] : 8888;
