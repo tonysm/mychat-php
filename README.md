@@ -3,30 +3,16 @@
 ## Instalation
 To start, do as follows:
 
-* point a VirtualHost to public dir
-* run <code>composer install</code> 
-* run <code>php bin/websocket-server.php 8888</code> to start the websocket server at the port 8888 (the default port)
-* open the project in the browser, login in and chat!
+* give execution permition to the bin websocket server, like so: <code>$ chmod +x ./bin/websocketserver</code>
+* run <code>$ composer install</code> 
+* run <code>$ bin/websocketserver 8888</code> to start the websocket server at the port 8888 (the default port)
+* run <code>$ php -S localhost:8000 -t ./public</code> to start a webserver in PHP at port 8000
+* open the project in the browser using the url you configured (http://localhost:8000/) and login in the chat
+
+Note: to test the interaction, use a different tab in the browser and login with a different username :)
 
 ### Warning
 if you change the port, you also have to change it in the JS file at public/js/app.js
-
-## Snippets
-### VirtualHost
-    <VirtualHost *:80>
-        ServerName mychat.dev
-        DocumentRoot /var/www/mychat/public
-        <Directory />
-            Options FollowSymLinks
-            AllowOverride All
-        </Directory>
-        <Directory /var/www/mychat/public>
-            Options Indexes FollowSymLinks MultiViews
-            AllowOverride All
-            Order allow,deny
-            allow from all
-        </Directory>
-    </VirtualHost>
 
 ## Using
 * PHP
